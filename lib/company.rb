@@ -5,12 +5,12 @@ require './lib/employee'
 require './lib/errors'
 
 class Company
-  attr_reader :employees, :projects, :time_sheets
+  attr_reader :employees, :projects, :timesheets
 
   def initialize
     @employees = []
     @projects = []
-    @time_sheets = []
+    @timesheets = []
   end
 
   def load_employees(filename)
@@ -18,24 +18,24 @@ class Company
       lines.each do |line|
         raise BadDataError if line.count != 5
         if line.count != 5
-          raise BadDataError
           return {:success => false, :error => 'bad data'}
         end
-          employees << line
-          return {:success => true, :error => nil}
-          # require 'pry'; binding.pry
+        employees << line
+        return {:success => true, :error => nil}
       end
   end
 
   def load_timesheets(filename)
     lines = CSV.readlines(filename)
     lines.each do |line|
+      raise BadDataError if line.count != 4 || line.include?(nil)
       if line.count != 4
+
         return {:success => false, :error => 'bad data'}
-        raise BadDataError
-      else
-        return {:success => true, :error => nil}
       end
+      timesheets << line
+      return {:success => true, :error => nil}
     end
   end
+
 end
