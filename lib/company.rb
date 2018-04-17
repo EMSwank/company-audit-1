@@ -48,16 +48,16 @@ class Company
   end
 
   def load_projects(filename)
-  lines = CSV.readlines(filename)
-  lines.each do |line|
-    raise BadDataError if line.count != 4 || line.include?(nil)
-    if line.count != 4
-      return {:success => false, :error => 'bad data'}
-    else
-      add_projects(line)
-      return {:success => true, :error => nil}
+    lines = CSV.readlines(filename)
+    lines.each do |line|
+      raise BadDataError if line.count != 4 || line.include?(nil)
+      if line.count != 4
+        return {:success => false, :error => 'bad data'}
+      else
+        add_projects(line)
+        return {:success => true, :error => nil}
+      end
     end
-  end
   end
 
   def add_timesheets(line)
