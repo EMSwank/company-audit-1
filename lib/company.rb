@@ -19,12 +19,11 @@ class Company
         raise BadDataError if line.count != 5
         if line.count != 5
           raise BadDataError
-          {:success => false, :error => 'bad data'}
-        else
-          employees << line
-          # require 'pry'; binding.pry
-          {:success => true, :error => nil}
+          return {:success => false, :error => 'bad data'}
         end
+          employees << line
+          return {:success => true, :error => nil}
+          # require 'pry'; binding.pry
       end
   end
 

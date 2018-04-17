@@ -30,7 +30,8 @@ class CompanyTest < Minitest::Test
     assert_raises BadDataError do
       company.load_employees(file_2)
     end
-    assert_equal 2, company.employees
+    assert_equal 2, company.employees.count
+
   end
 
   # def test_it_loads_timesheets
