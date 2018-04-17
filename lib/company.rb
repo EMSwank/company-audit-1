@@ -16,13 +16,27 @@ class Company
   def load_employees(filename)
     lines = CSV.readlines(filename)
       lines.each do |line|
+        raise BadDataError if line.count != 5
         if line.count != 5
           raise BadDataError
-          return {:success => false, :error => 'bad data'}
+          {:success => false, :error => 'bad data'}
         else
-          return {:success => true, :error => nil}
+          employees << line
+          # require 'pry'; binding.pry
+          {:success => true, :error => nil}
         end
-      end 
-    # require 'pry'; binding.pry
+      end
+  end
+
+  def load_timesheets(filename)
+    lines = CSV.readlines(filename)
+    lines.each do |line|
+      if line.count != 4
+        return {:success => false, :error => 'bad data'}
+        raise BadDataError
+      else
+        return {:success => true, :error => nil}
+      end
+    end
   end
 end
