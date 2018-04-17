@@ -20,20 +20,19 @@ class Company
         if line.count != 5
           return {:success => false, :error => 'bad data'}
         end
-        employees << line
+        add_employees(line)
         return {:success => true, :error => nil}
       end
   end
 
-  def add_employees
-    @employees.each do |employee|
-      Employee.new(:employee_id => employee[0],
-                   :name => employee[1],
-                   :role => employee[2],
-                   :start_date => employee[3],
-                   :end_date => employee[4])
-      end 
-    require 'pry'; binding.pry
+  def add_employees(line)
+      employee = Employee.new(:employee_id => line[0],
+                   :name => line[1],
+                   :role => line[2],
+                   :start_date => line[3],
+                   :end_date => line[4])
+      employees << employee
+
 
   end
 
@@ -51,6 +50,6 @@ class Company
   end
 
   def find_employee_by_id(employee_id)
-
+     employees.find {|emp| emp.employee_id == employee_id}
   end
 end

@@ -31,7 +31,8 @@ class CompanyTest < Minitest::Test
       company.load_employees(file_2)
     end
     assert_equal 2, company.employees.count
-    assert_instance_of Employee, company.add_employees
+    refute company.employees.empty?
+    assert_instance_of Employee, company.employees[0]
   end
 
   def test_it_loads_timesheets
@@ -42,5 +43,14 @@ class CompanyTest < Minitest::Test
     assert_equal 2, company.load_timesheets(file_1).count
     assert_equal ({:success => true, :error => nil}), company.load_timesheets(file_1)
     assert_equal 2, company.timesheets.count
+  end
+
+  def test_it_finds_by_id
+    company = Company.new
+    file = './data/employees.csv'
+    company.load_employees(file)
+
+    assert_instance_of Employee, company.find_employee_by_id(1)
+    refute_instance_of Employee, company.find_employee_by_id(9)
   end
 end
