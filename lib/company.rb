@@ -41,9 +41,9 @@ class Company
       if line.count != 4
         return {:success => false, :error => 'bad data'}
       else
-      timesheets << line
-      return {:success => true, :error => nil}
-    end
+        add_timesheets(line)
+        return {:success => true, :error => nil}
+      end
     end
   end
 
@@ -54,11 +54,20 @@ class Company
     if line.count != 4
       return {:success => false, :error => 'bad data'}
     else
-    add_projects(line)
-    return {:success => true, :error => nil}
+      add_projects(line)
+      return {:success => true, :error => nil}
     end
   end
   end
+
+  def add_timesheets(line)
+      timesheet = Timesheet.new(:employee_id => line[0],
+                   :project_id => line[1],
+                   :date => line[3],
+                   :minutes => line[4])
+      timesheets << timesheet
+  end
+
 
   def add_projects(line)
       project = Project.new(:project_id => line[0],

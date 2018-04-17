@@ -43,6 +43,7 @@ class CompanyTest < Minitest::Test
     assert_equal 2, company.load_timesheets(file_1).count
     assert_equal ({:success => true, :error => nil}), company.load_timesheets(file_1)
     assert_equal 2, company.timesheets.count
+    assert_instance_of Timesheet, company.timesheets[0]
   end
 
   def test_it_finds_by_id

@@ -1,4 +1,4 @@
-class TimeSheet
+class Timesheet
   attr_reader :employee_id, :project_id, :date, :minutes
 
   def initialize(data)
