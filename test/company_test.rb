@@ -53,4 +53,13 @@ class CompanyTest < Minitest::Test
     assert_instance_of Employee, company.find_employee_by_id(1)
     refute_instance_of Employee, company.find_employee_by_id(9)
   end
+
+  def test_it_finds_project_id
+    company = Company.new
+    file = './data/projects.csv'
+    company.load_projects(file)
+
+    assert_instance_of Project, company.find_by_project_id(1)
+    refute_instance_of Project, company.find_by_project_id(5)
+  end
 end

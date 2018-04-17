@@ -32,8 +32,6 @@ class Company
                    :start_date => line[3],
                    :end_date => line[4])
       employees << employee
-
-
   end
 
   def load_timesheets(filename)
@@ -49,7 +47,33 @@ class Company
     end
   end
 
+  def load_projects(filename)
+  lines = CSV.readlines(filename)
+  lines.each do |line|
+    raise BadDataError if line.count != 4 || line.include?(nil)
+    if line.count != 4
+      return {:success => false, :error => 'bad data'}
+    else
+    add_projects(line)
+    return {:success => true, :error => nil}
+    end
+  end
+  end
+
+  def add_projects(line)
+      project = Project.new(:project_id => line[0],
+                   :name => line[1],
+                   :start_date => line[3],
+                   :end_date => line[4])
+      projects << project
+  end
+
+
   def find_employee_by_id(employee_id)
-     employees.find {|emp| emp.employee_id == employee_id}
+     employees.find {|employee| employee.employee_id == employee_id}
+  end
+
+  def find_by_project_id(project_id)
+    projects.find {|project| project.project_id == project_id}
   end
 end
